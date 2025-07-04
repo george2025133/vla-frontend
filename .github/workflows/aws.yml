@@ -3,17 +3,17 @@ name: Deploy to Amazon ECS
 on:
   push:
     branches:
-      - mainrr
+      - mainFFF
 
 env:
   AWS_REGION: us-east-1
-  ECS_CLUSTER_PROD: Monetae-Prod
-  ECS_SERVICE_PROD: svc-monetae-mstrans
+  ECS_CLUSTER_PROD: Cluster-VLA
+  ECS_SERVICE_PROD: svc-frontend
 
-  ECR_REPOSITORY: ${{ github.ref == 'refs/heads/prod' && 'prd-moneate-mstrans' || (github.ref == 'refs/heads/development' && 'moneate-ms-transactiones' || (github.ref == 'refs/heads/qa' && 'moneate-qa-transactiones')) }}
+  ECR_REPOSITORY: ${{ github.ref == 'refs/heads/main' && 'vla-frontend' || (github.ref == 'refs/heads/development' && 'moneate-ms-transactiones' || (github.ref == 'refs/heads/qa' && 'moneate-qa-transactiones')) }}
 
-  ECS_TASK_DEFINITION: ${{ github.ref == 'refs/heads/main' && '.github/workflows/task-definition-prd.json' || (github.ref == 'refs/heads/development' && '.github/workflows/task-definitions.json' || (github.ref == 'refs/heads/qa' && '.github/workflows/task-definition-qa.json')) }}
-  CONTAINER_NAME: ${{ github.ref == 'refs/heads/main' && 'prd-trans' || (github.ref == 'refs/heads/development' && 'ms-trans' || (github.ref == 'refs/heads/qa' && 'mstrans-qa')) }}
+  ECS_TASK_DEFINITION: ${{ github.ref == 'refs/heads/main' && '.github/workflows/task-definition.json' || (github.ref == 'refs/heads/development' && '.github/workflows/task-definitions.json' || (github.ref == 'refs/heads/qa' && '.github/workflows/task-definition-qa.json')) }}
+  CONTAINER_NAME: ${{ github.ref == 'refs/heads/main' && 'frontend' || (github.ref == 'refs/heads/development' && 'ms-trans' || (github.ref == 'refs/heads/qa' && 'mstrans-qa')) }}
 
 permissions:
   contents: read
@@ -45,12 +45,12 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ 
-         github.ref == 'refs/heads/main' && secrets.AWS_ACCESS_KEY_ID_PROD || 
+         github.ref == 'refs/heads/main' && secrets.AWS_ACCESS_KEY_ID || 
          github.ref == 'refs/heads/qa' && secrets.AWS_ACCESS_KEY_ID_QA || 
-         github.ref == 'refs/heads/development' && secrets.AWS_ACCESS_KEY_ID 
+         github.ref == 'refs/heads/development' && secrets.AWS_ACCESS_KEY_ID_DEV
          }}
         aws-secret-access-key: ${{ 
-         github.ref == 'refs/heads/main' && secrets.AWS_SECRET_ACCESS_KEY_PROD || 
+         github.ref == 'refs/heads/main' && secrets.AWS_SECRET_ACCESS_KEY || 
          github.ref == 'refs/heads/qa' && secrets.AWS_SECRET_ACCESS_KEY_QA || 
          github.ref == 'refs/heads/development' && secrets.AWS_SECRET_ACCESS_KEY
          }}

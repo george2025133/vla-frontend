@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: us-east-1
   ECS_CLUSTER_PROD: Cluster-VLA
-  ECS_SERVICE_PROD: svc-frontend
+  ECS_SERVICE_PROD: frontend-curso-service
 
   ECR_REPOSITORY: ${{ github.ref == 'refs/heads/main' && 'vla-frontend' || (github.ref == 'refs/heads/development' && 'moneate-ms-transactiones' || (github.ref == 'refs/heads/qa' && 'moneate-qa-transactiones')) }}
 

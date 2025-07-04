@@ -48,7 +48,7 @@
             const customerList = document.getElementById('customer-list');
 
             // Cargar datos existentes
-            fetch('http://localhost:5000/api/data')
+            fetch('https://api.wakocloud.link:5000/api/data')
                 .then(response => response.json())
                 .then(data => {
                     data.forEach(customer => {
